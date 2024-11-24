@@ -1,0 +1,130 @@
+InitNeur
+
+n:nombre d'entrée
+s:seuil/biais associé au neurone
+listePoids:liste des poids du neurone
+neuron:neurone
+poids:un poids du neuron
+EntréeUtilisateur: entrée utilisateur
+
+
+Fonction InitNeur (n:entier strict positif,s:réel):neurone
+
+DEBUT
+
+    si n<=0 faire
+        afficher('erreur de paramètre')
+        InitNeur<--Erreur
+    sinon faire
+        listePoids<--créerListeVide()
+        neuron<--créerNeuronVide()
+        Pour i de 1 à n faire
+            poids<--EntréeUtilisateur
+            ajouterqueue(listePoids,poids)
+        Fin pour
+        neuron.poids<--listePoids
+        neuron.seuil<--s
+        neuron.nbEntrée<--n
+        InitNeur<--neuron
+
+FIN
+
+Outneurone
+
+entry:liste d'entier représentant les entrées du neurone
+neuron: neurone à qui on applique la fonction d'activation
+x: somme utilisé dans la fonction d'activation
+listePoids:liste utilisé pour parcourir la liste de poids du neurone
+listeEntrée:liste utilisé pour parcourir la liste d'entrée du neurone
+
+Fonction Outneurone (listEntry:liste<entier>,neuron:neurone):entier
+
+DEBUT
+
+    si nombreElem(listEntry)!=neuron.nbEntrée faire
+        afficher('Erreur de paramètre')
+        Outneurone<--Erreur
+    sinon
+        x<--0
+        listePoids<--tete(neuron.poids)
+        listeEntrée<--tete(listEntry)
+        Pour i de 1 à n faire
+            somme<--somme+listePoids.poids*listeEntrée.entrée
+            listePoids<--suivant(listePoids)
+            listeEntrée<--suivant(listeEntrée)
+        Fin pour
+        si x>=neuron.seuil faire
+            Outneurone<--1
+        sinon faire
+            Outneurone<--0
+            
+FIN
+
+ajouterqueue
+node: nouveau noeud de la liste
+parcours: liste utilisé  pour parcourir list
+
+Fonction ajouterqueuePoids(list:liste<entier>,poids:entier):liste
+
+DEBUT
+
+    node<--créerNoeudVide()
+    node.poids<--poids
+    si estVide(list) faire 
+        ajouterqueue<--node
+    sinon faire
+        parcours<--tete(list)
+        tant que nonEstNul(suivant(parcours)) faire
+            parcours<--suivant(parcours)
+        Fin
+        suivant(parcours)<--node
+        ajouterqueue<--list
+
+FIN
+
+
+
+nombreElem
+
+nb: nombre de noeud de la liste
+parcours: liste utilisé pour parcourir la liste
+
+Fonction nombreElem(list:liste<entier>):entier
+
+DEBUT
+    si estVide(list) faire
+        0<--nombreElem
+    sinon faire
+        1<--nb
+        parcours<--tete(list)
+        tant que nonEstNul(suivant(parcours)) faire
+            nb<--nb+1
+            parcours<--suivant(parcours)
+        fin
+        nb<--nombreElem
+
+FIN
+
+afficherLPoids
+
+parcours: liste utilisé pour parcours la liste
+i: indice utilisé pour compter le nombre de noeud
+
+Procédure afficherLPoids(list:liste<entier)
+
+DEBUT
+
+    si estVide(list) faire
+        afficher(liste vide)
+        afficherLPoids<--Succes
+    sinon faire
+        parcours<--tete(list)
+        i<--1
+        tant que nonEstNul(parcours) faire
+            afficher('Element i:')
+            afficher(parcours.poids)
+            i<--i+1
+            parcours<--suivant(parcours)
+        fin
+
+FIN
