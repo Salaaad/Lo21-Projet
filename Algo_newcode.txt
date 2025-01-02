@@ -32,6 +32,7 @@ Début
   Créer Neurone (neurone)
   Affecter à neurone.listePoids : CreerListePoids(poids, nombreEntrees)
   Affecter à neurone.biais : biais
+  Affecter à neurone.suivant : NULL
   Retourner neurone
 Fin
 
@@ -52,7 +53,7 @@ Variable
 Début
   somme ← 0
   Affecter à courant : neurone.listePoids
-  Pour i allant de 0 à taille - 1 faire
+  Pour i allant de 0 à taille faire
     somme ← somme + courant.valeur * entrees[i]
     Affecter à courant : courant.suivant
   Fin pour
