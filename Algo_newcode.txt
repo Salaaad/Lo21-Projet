@@ -65,39 +65,41 @@ Début
 Fin
 
 
-4. Initialisation d'une couche
-Algorithme : InitCouche
-Variable
-  c : Couche
-  i : entier
+4. Algorithme pour InitCouche
+Variables : 
+couche : Couche (pointeur)
+dernier : Neurone (pointeur)
+nouveauNeurone : Neurone (pointeur)
+i : entier
 
 Début
-  Créer Couche (c)
-  Affecter à c.nbNeurones : nbNeurones
-  Allouer mémoire pour c.listeNeurones
-  Pour i allant de 0 à nbNeurones - 1 faire
-    c.listeNeurones[i] ← InitNeur(poids[i], nbEntrees, seuils[i])
-  Fin pour
-  Retourner c
+Allouer mémoire pour couche
+Affecter à couche.listeNeurones : NULL
+Affecter à dernier : NULL
+Pour i allant de 0 à nbNeurones - 1 faire :
+Appeler InitNeur avec poids[i], nbEntrees, biais[i] et affecter le résultat à nouveauNeurone
+Si couche.listeNeurones est NULL alors :
+Affecter nouveauNeurone à couche.listeNeurones
+Sinon :
+Affecter nouveauNeurone à dernier.suivant
+Affecter nouveauNeurone à dernier
+Retourner couche
 Fin
 
 
+5.Algorithme pour OutCouche
 
+Variables:
+sorties : tableau d’entiers
+courant : Neurone (pointeur)
+i : entier
 
-
-
-
-
-5. Calcul de la sortie d'une couche
-Algorithme : OutCouche
-Variable
-  sorties : tableau d'entiers
-  i : entier
-
-Début
-  Allouer mémoire pour sorties (taille : couche.nbNeurones)
-  Pour i allant de 0 à couche.nbNeurones - 1 faire
-    sorties[i] ← OutNeurone(couche.listeNeurones[i], entrees, taille)
-  Fin pour
-  Retourner sorties
+Début:
+Affecter à courant : couche.listeNeurones
+Affecter à i : 0
+Tant que courant n’est pas NULL faire :
+Appeler OutNeurone avec courant, entrees, taille et stocker le résultat dans sorties[i]
+Affecter à courant : courant.suivant
+Incrémenter i
+Retourner sorties
 Fin
