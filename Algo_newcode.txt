@@ -1,0 +1,102 @@
+1. Création d'une liste chaînée de poids
+Algorithme : CreerListePoids
+Variable
+  tete : Poids
+  courant : Poids
+  i : entier
+
+Début
+  tete ← NULL
+  courant ← NULL
+  Pour i allant de 0 à taille - 1 faire
+    Créer Poids (nouveau)
+    Affecter à nouveau.valeur : poids[i]
+    Affecter à nouveau.suivant : NULL
+    Si tete est NULL alors
+      Affecter à tete : nouveau
+    Sinon
+      Affecter à courant.suivant : nouveau
+    Fin si
+    Affecter à courant : nouveau
+  Fin pour
+  Retourner tete
+Fin
+
+
+2. Initialisation d'un neurone
+Algorithme : InitNeur
+Variable
+  neurone : Neurone
+
+Début
+  Créer Neurone (neurone)
+  Affecter à neurone.listePoids : CreerListePoids(poids, nombreEntrees)
+  Affecter à neurone.biais : biais
+  Retourner neurone
+Fin
+
+
+
+
+
+
+
+
+3. Calcul de la sortie d'un neurone
+Algorithme : OutNeurone
+Variable
+  somme : entier
+  courant : Poids
+  i : entier
+
+Début
+  somme ← 0
+  Affecter à courant : neurone.listePoids
+  Pour i allant de 0 à taille - 1 faire
+    somme ← somme + courant.valeur * entrees[i]
+    Affecter à courant : courant.suivant
+  Fin pour
+  Si somme ≥ neurone.biais alors
+    Retourner 1
+  Sinon
+    Retourner 0
+  Fin si
+Fin
+
+
+4. Initialisation d'une couche
+Algorithme : InitCouche
+Variable
+  c : Couche
+  i : entier
+
+Début
+  Créer Couche (c)
+  Affecter à c.nbNeurones : nbNeurones
+  Allouer mémoire pour c.listeNeurones
+  Pour i allant de 0 à nbNeurones - 1 faire
+    c.listeNeurones[i] ← InitNeur(poids[i], nbEntrees, seuils[i])
+  Fin pour
+  Retourner c
+Fin
+
+
+
+
+
+
+
+
+5. Calcul de la sortie d'une couche
+Algorithme : OutCouche
+Variable
+  sorties : tableau d'entiers
+  i : entier
+
+Début
+  Allouer mémoire pour sorties (taille : couche.nbNeurones)
+  Pour i allant de 0 à couche.nbNeurones - 1 faire
+    sorties[i] ← OutNeurone(couche.listeNeurones[i], entrees, taille)
+  Fin pour
+  Retourner sorties
+Fin
