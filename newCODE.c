@@ -6,24 +6,35 @@ typedef struct Poids {
     struct Poids* suivant;
 } Poids;
 
+typedef Poids* listPoids;
+
 typedef struct Neurone {
-    Poids* listePoids;
+    listPoids listePoids;
     int biais;
     struct Neurone* suivant;
 } Neurone;
 
+typedef Neurone* listNeurone;
+
 typedef struct Couche {
-    Neurone* listeNeurones;
+    listNeurone listeNeurones;
     struct Couche* suivant;
 } Couche;
 
+typedef Couche* listCouche;
+
 // doute car reseau a une suite ou c'est un seul reseau ?
 typedef struct Reseau {
-    Couche* listeCouches;
+    listCouche listeCouches;
 } Reseau;
 
 
-Poids* CreerListePoids(int* poids, int taille) 
+
+
+
+
+
+listPoids CreerListePoids(int* poids, int taille) 
 {
     Poids* tete = NULL;
     Poids* courant = NULL;
@@ -42,7 +53,7 @@ Poids* CreerListePoids(int* poids, int taille)
 }
 
 
-Neurone* InitNeur(int* poids, int nombreEntrees, int biais) 
+listNeurone InitNeur(int* poids, int nombreEntrees, int biais) 
 {
     Neurone* neurone = (Neurone*)malloc(sizeof(Neurone));
     neurone->listePoids = CreerListePoids(poids, nombreEntrees);
@@ -52,7 +63,7 @@ Neurone* InitNeur(int* poids, int nombreEntrees, int biais)
 }
 
 
-int OutNeurone(Neurone* neurone, int* entrees, int taille) 
+int OutNeurone(listNeurone neurone, int* entrees, int taille) 
 {
     int somme = 0;
     Poids* courant = neurone->listePoids;
@@ -64,7 +75,7 @@ int OutNeurone(Neurone* neurone, int* entrees, int taille)
 }
 
 
-Couche* InitCouche(int nbNeurones, int nbEntrees, int** poids, int* biais) 
+listCouche InitCouche(int nbNeurones, int nbEntrees, int** poids, int* biais) 
 {
     Couche* couche = (Couche*)malloc(sizeof(Couche));
     couche->listeNeurones = NULL;
@@ -109,6 +120,11 @@ int* OutCouche(Couche* couche, int* entrees, int taille)
 }
 
 
+
+
+
+
+
 int main() {
     int nbEntrees = 2;
     int nbNeurones = 2;
@@ -120,7 +136,7 @@ int main() {
 
     int entrees[] = {1, 0};
 
-    Couche* couche = InitCouche(nbNeurones, nbEntrees, poids, biais);
+    listCouche couche = InitCouche(nbNeurones, nbEntrees, poids, biais);
 
     printf("Sorties de la couche :\n");
     int* sorties = OutCouche(couche, entrees, nbEntrees);
