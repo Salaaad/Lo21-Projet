@@ -6,27 +6,25 @@ typedef struct Poids {
     struct Poids* suivant;
 } Poids;
 
-
 typedef struct Neurone {
     Poids* listePoids;
     int biais;
+    struct Neurone* suivant;
 } Neurone;
 
-
 typedef struct Couche {
-    Neurone** listeNeurones;
-    int nbNeurones;
+    Neurone* listeNeurones;
     struct Couche* suivant;
 } Couche;
 
-
+// doute car reseau a une suite ou c'est un seul reseau ?
 typedef struct Reseau {
     Couche* listeCouches;
-    int nbCouches;
 } Reseau;
 
 
-Poids* CreerListePoids(int* poids, int taille) {
+Poids* CreerListePoids(int* poids, int taille) 
+{
     Poids* tete = NULL;
     Poids* courant = NULL;
     for (int i = 0; i < taille; i++) {
@@ -44,106 +42,108 @@ Poids* CreerListePoids(int* poids, int taille) {
 }
 
 
-
-Neurone* InitNeur(int* poids, int nombreEntrees, int biais) {
+Neurone* InitNeur(int* poids, int nombreEntrees, int biais) 
+{
     Neurone* neurone = (Neurone*)malloc(sizeof(Neurone));
     neurone->listePoids = CreerListePoids(poids, nombreEntrees);
     neurone->biais = biais;
+    neurone->suivant = NULL;
     return neurone;
 }
 
-/* 
-Opérateur Ternaire :
-? et :
-Syntaxe : condition ? valeur_si_vrai : valeur_si_faux
-Si la condition est vraie (somme ≥ neurone->biais ), retourne 1.
-Sinon, retourne 0
-*/
-int OutNeurone(Neurone* neurone, int* entrees, int taille) {
+
+int OutNeurone(Neurone* neurone, int* entrees, int taille) 
+{
     int somme = 0;
     Poids* courant = neurone->listePoids;
     for (int i = 0; i < taille; i++) {
         somme += courant->valeur * entrees[i];
         courant = courant->suivant;
     }
-
     return (somme >= neurone->biais) ? 1 : 0;
 }
 
 
-// On va initialiser une couche donc on prend les élements des neuronnes //
-Couche InitCouche(int nbNeurones, int nbEntrees, int **poids, int *seuils) 
+Couche* InitCouche(int nbNeurones, int nbEntrees, int** poids, int* biais) 
 {
-    Couche c;
-    c.nbNeurones = nbNeurones;
-    c.listeNeurones = (Neurone **)malloc(nbNeurones * sizeof(Neurone *));
+    Couche* couche = (Couche*)malloc(sizeof(Couche));
+    couche->listeNeurones = NULL;
+    couche->suivant = NULL;
+
+    Neurone* dernier = NULL;
     for (int i = 0; i < nbNeurones; i++) {
-        c.listeNeurones[i] = InitNeur(poids[i], nbEntrees, seuils[i]);
+        Neurone* nouveauNeurone = InitNeur(poids[i], nbEntrees, biais[i]);
+        if (!couche->listeNeurones) {
+            couche->listeNeurones = nouveauNeurone;
+        } else {
+            dernier->suivant = nouveauNeurone;
+        }
+        dernier = nouveauNeurone;
     }
-    return c;
+    return couche;
 }
 
-int* OutCouche(Couche couche, int *entrees, int taille) 
+
+int* OutCouche(Couche* couche, int* entrees, int taille) 
 {
-    int *sorties = (int *)malloc(couche.nbNeurones * sizeof(int));
-    if (sorties == NULL) {
+    int nbNeurones = 0;
+    Neurone* courant = couche->listeNeurones;
+    while (courant) {
+        nbNeurones++;
+        courant = courant->suivant;
+    }
+
+    int* sorties = (int*)malloc(nbNeurones * sizeof(int));
+    if (!sorties) {
         fprintf(stderr, "Erreur d'allocation mémoire\n");
         exit(1);
     }
 
-    for (int i = 0; i < couche.nbNeurones; i++) {
-        sorties[i] = OutNeurone(couche.listeNeurones[i], entrees, taille);
+    int i = 0;
+    courant = couche->listeNeurones;
+    while (courant) {
+        sorties[i++] = OutNeurone(courant, entrees, taille);
+        courant = courant->suivant;
     }
-
     return sorties;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-int main() 
-{
-    int nbEntrees = 2; 
+int main() {
+    int nbEntrees = 2;
     int nbNeurones = 2;
 
     int poidsNeurone1[] = {2, -1};
     int poidsNeurone2[] = {-1, 2};
-    int* poids[] = {poidsNeurone1, poidsNeurone2}; 
-    int biais[] = {1, 1}; 
+    int* poids[] = {poidsNeurone1, poidsNeurone2};
+    int biais[] = {1, 1};
 
-    
     int entrees[] = {1, 0};
 
-    
-    Couche couche = InitCouche(nbNeurones, nbEntrees, poids, biais);
+    Couche* couche = InitCouche(nbNeurones, nbEntrees, poids, biais);
 
-    
     printf("Sorties de la couche :\n");
-    for (int i = 0; i < nbNeurones; i++) 
-    {
-        int sortie = OutNeurone(couche.listeNeurones[i], entrees, nbEntrees);
-        printf("Sortie du neurone %d : %d\n", i + 1, sortie);
+    int* sorties = OutCouche(couche, entrees, nbEntrees);
+    for (int i = 0; i < nbNeurones; i++) {
+        printf("Sortie du neurone %d : %d\n", i + 1, sorties[i]);
     }
 
+    free(sorties);
+
     
-    for (int i = 0; i < nbNeurones; i++) {
-        Poids* courant = couche.listeNeurones[i]->listePoids;
-        while (courant != NULL) {
-            Poids* temp = courant;
-            courant = courant->suivant;
-            free(temp);
+    Neurone* courantNeurone = couche->listeNeurones;
+    while (courantNeurone) {
+        Poids* courantPoids = courantNeurone->listePoids;
+        while (courantPoids) {
+            Poids* tempPoids = courantPoids;
+            courantPoids = courantPoids->suivant;
+            free(tempPoids);
         }
-        free(couche.listeNeurones[i]);
+        Neurone* tempNeurone = courantNeurone;
+        courantNeurone = courantNeurone->suivant;
+        free(tempNeurone);
     }
-    free(couche.listeNeurones);
+    free(couche);
 
     return 0;
 }
