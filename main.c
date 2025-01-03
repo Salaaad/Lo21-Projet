@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "fcts.h"
+#include "reseau.h"
 
 int main() {
-    // // Créer une couche avec 3 neurones, chacun ayant 2 entrées
+    // // Créer une couche avec 3 neurones, chacun ayant 2 entrées                                                  TEST AVEC JUSTE LES COUCHES
     // Couche* maCouche = InitCouche(2, 1);
 
     // // Créer une liste chaînée d'entrées
@@ -25,7 +25,7 @@ int main() {
 
 
 
-    // Neurone* Node=InitNeur(2);
+    // Neurone* Node=InitNeur(2);                           TEST AVEC JUSTE LES NEURONES
     // Entrée* entry=creerListeEntrees(2);
     // afficherNeurone(Node);
     // printf("\n%i",Outneurone(Node,entry));
@@ -33,25 +33,18 @@ int main() {
 
 
     int nbCouches = 2;  
-    int neuronesParCouche[] = {2, 1};  
-    int entreesPremiereCouche = 2;  
+    int neuronesParCouche[] = {3,2};  
+    int entreesPremiereCouche = 3;  
 
-    // Créer le réseau
     Reseau* reseau = CreerResNeur(nbCouches, neuronesParCouche, entreesPremiereCouche);
-
-    printf("Réseau créé avec succès !\n");
-
-
 
     afficherReseau(reseau);
 
-    Entrée* entreesInitiales = creerListeEntrees(2);  // Initialiser les entrées du réseau
+    Entrée* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
+    printf("Entrée du réseau : ");
     afficherListeEntrees(entreesInitiales);
 
-    // Calculer la sortie du réseau
     Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
-
-    // Afficher la sortie du réseau
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
         
