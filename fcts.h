@@ -36,6 +36,12 @@ typedef struct Couche {
 typedef struct Couche* listCouche;
 
 
+typedef struct Reseau {
+    Couche* premiereCouche;  // Pointeur vers la première couche
+    int nbCouches;           // Nombre de couches dans le réseau
+} Reseau;
+
+
 // Fonction pour créer une liste chaînée de poids
 listPoids creerListePoids(int nombreEntrees) {
     Poids* listePoids = NULL;
@@ -145,6 +151,21 @@ void afficherCouche(Couche* couche) {
 }
 
 
+// Fonction pour afficher le réseau complet
+void afficherReseau(Reseau* reseau) {
+    Couche* coucheCourante = reseau->premiereCouche;
+    int indexCouche = 1;
+    
+    // Parcourir toutes les couches du réseau
+    while (coucheCourante != NULL) {
+        printf("Couche %d :\n", indexCouche);
+        afficherCouche(coucheCourante);  // Appeler afficherCouche pour chaque couche
+        coucheCourante = coucheCourante->suivant;
+        indexCouche++;
+    }
+}
+
+
 
 int Outneurone(Neurone* neurone, Entrée* entrees) {
     if (neurone == NULL || entrees == NULL) {
@@ -233,6 +254,71 @@ Entrée* Outcouche(Couche* couche, Entrée* entrees) {
 }
 
 
+
+Reseau* CreerResNeur(int nbCouches, int* neuronesParCouche, int entreesPremiereCouche) {
+    // Allocation du réseau
+    Reseau* reseau = (Reseau*)malloc(sizeof(Reseau));
+    reseau->premiereCouche = NULL;
+    reseau->nbCouches = nbCouches;
+
+    Couche* coucheCourante = NULL;
+    int nbEntrees = entreesPremiereCouche;  // Nombre d'entrées pour la première couche
+
+    for (int i = 0; i < nbCouches; i++) {
+
+        // Affichage du numéro de la couche
+        printf("Création de la couche %d avec %d neurones...\n", i + 1, neuronesParCouche[i]);
+
+        // Initialiser une nouvelle couche avec `InitCouche`
+        Couche* nouvelleCouche = InitCouche(neuronesParCouche[i], nbEntrees);
+
+        if (reseau->premiereCouche == NULL) {
+            reseau->premiereCouche = nouvelleCouche;  // Première couche
+        } else {
+            coucheCourante->suivant = nouvelleCouche;  // Lier la couche courante à la nouvelle
+        }
+
+        // Avancer le pointeur de la couche courante
+        coucheCourante = nouvelleCouche;
+
+        // Mettre à jour le nombre d'entrées pour la couche suivante
+        nbEntrees = neuronesParCouche[i];
+    }
+
+    return reseau;
+}
+
+// Fonction pour calculer la sortie du réseau
+Entrée* OutReseau(Reseau* reseau, Entrée* entreesInitiales) {
+    Entrée* entreesActuelles = entreesInitiales;  // Entrées initiales du réseau
+    Couche* coucheCourante = reseau->premiereCouche;
+    
+    // Parcourir toutes les couches du réseau
+    while (coucheCourante != NULL) {
+        // Calculer la sortie de la couche courante avec les entrées actuelles
+        // La sortie de cette couche devient l'entrée pour la couche suivante
+        entreesActuelles = Outcouche(coucheCourante, entreesActuelles);
+        
+        // Passer à la couche suivante
+        coucheCourante = coucheCourante->suivant;
+    }
+
+    // Retourner les entrées finales qui sont la sortie du réseau
+    return entreesActuelles;
+}
+
+// Fonction pour afficher une liste chaînée d'entrées
+void afficherListeEntrees(Entrée* listeEntrees) {
+    Entrée* courant = listeEntrees;
+    
+    // Parcourir la liste chaînée
+    while (courant != NULL) {
+        printf("%d ", courant->valeur);  // Afficher la valeur de l'entrée
+        courant = courant->suivant;       // Passer à l'entrée suivante
+    }
+    
+    printf("\n");  // Nouvelle ligne à la fin de l'affichage
+}
 
 
 #endif
