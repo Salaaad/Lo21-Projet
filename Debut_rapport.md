@@ -491,6 +491,11 @@ Ces fonctions forment un réseau de neurones où chaque neurone reçoit des entr
 - **Entrées** : `1,11`, `11,1`, Poids et biais prédéfinis.
 - **Résultat attendu** : La sortie de la première couche alimente les entrées de la deuxième couche, permettant une propagation avant complète.
 
+## Schéma pour le réseau multi-couche
+Voici un schéma explicatif pour le réseau multi-couche
+ ![image](https://github.com/user-attachments/assets/26b57e89-674d-4870-b5ae-b79fb32d005f)
+
+
 ## 4. Commentaires sur les résultats
 - Les tests montrent que les algorithmes fonctionnent correctement pour des entrées et poids simples.
 - Les résultats des neurones respectent les calculs de sommes pondérées et la comparaison avec le biais.
