@@ -52,12 +52,12 @@ int main() {
 
 
 
-   /** 
+   
 
 
     int nbCouches = 2;                                       // RESEAU ENTIER
-    int neuronesParCouche[] = {3,2};  
-    int entreesPremiereCouche = 3;  
+    int neuronesParCouche[] = {1,1};  
+    int entreesPremiereCouche = 2;  
 
     Reseau* reseau = CreerResNeur(nbCouches, neuronesParCouche, entreesPremiereCouche);
 
@@ -76,7 +76,7 @@ int main() {
     free(sortieReseau);
 
     
-    */
+    
 
 
 

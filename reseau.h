@@ -281,7 +281,7 @@ void afficherNeurone(Neurone* neurone) {
         courant = courant->suivant;
     }
     printf("\n        Biais : %f\n", neurone->biais);
-free(courant);
+
 }
 
 
@@ -299,7 +299,6 @@ void afficherCouche(Couche* couche) {
         afficherNeurone(courant); 
         courant = courant->suivant;
     }
-free(couche);
 }
 
 
@@ -313,7 +312,6 @@ void afficherReseau(Reseau* reseau) {
         coucheCourante = coucheCourante->suivant;
         indexCouche++;
     }
-free(reseau);
 }
 
 
