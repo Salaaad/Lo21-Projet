@@ -8,15 +8,12 @@
    - Liste dynamique pour les neurones dans une couche : 2  
    - Structure pour le réseau : 2  
    - Démarche adoptée : 2  
-2. [Algorithmes et explications](#algorithmes-et-explications) 2  
-   - Création d’une liste de poids : 2  
-   - Calcul de la sortie d’un neurone : 2  
-   - Initialisation d’une couche : 2  
-   - Calcul de la sortie d’une couche : 3  
-3. [Jeux d’essais](#jeux-dessais) 3  
+2. [Les Algorithmes](#Les-Algorithmes) 2  
+3. [Explications des algorithmes](#Explications-des-algorithmes) 3  
+4. [Jeux d’essais](#jeux-dessais) 3  
    - Une seule couche avec deux neurones : 3  
    - Deux couches connectées : 3  
-4. [Commentaires sur les résultats](#commentaires-sur-les-résultats) 3
+5. [Commentaires sur les résultats](#commentaires-sur-les-résultats) 3
 
 ## 1. Choix de conception et d’implémentation
 
