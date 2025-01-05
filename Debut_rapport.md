@@ -513,6 +513,61 @@ Fin
   - `coucheCourante` : Pointeur permettant de naviguer à travers les couches du réseau.
   - `indexCouche` : Un compteur pour indiquer l'index de la couche dans le réseau.
  
+## 12.**Fonction freeListePoids(listePoids: Liste<Poids>)**
+
+- **Entrée :**
+  - `listePoids` : Une liste chaînée de poids à libérer de la mémoire.
+
+- **Sortie :**
+  - Aucune. La fonction libère chaque nœud de la liste.
+
+- **Lexique :**
+  - `courant` : Un pointeur qui parcourt les nœuds de la liste des poids.
+  - `suivant` : Un pointeur temporaire pour stocker le nœud suivant pendant la libération.
+
+---
+
+## 13. **Fonction freeListeNeurones(listeNeurones: Liste<Neurone>)**
+
+- **Entrée :**
+  - `listeNeurones` : Une liste chaînée de neurones à libérer de la mémoire.
+
+- **Sortie :**
+  - Aucune. La fonction libère chaque neurone, y compris ses poids.
+
+- **Lexique :**
+  - `courant` : Un pointeur qui parcourt les nœuds de la liste des neurones.
+  - `suivant` : Un pointeur temporaire pour stocker le neurone suivant pendant la libération.
+  - `courant.listePoids` : La liste de poids associée à un neurone, qui est libérée avant le neurone lui-même.
+
+---
+
+## 14. **Fonction freeListeCouches(listeCouches: Liste<Couche>)**
+
+- **Entrée :**
+  - `listeCouches` : Une liste chaînée de couches à libérer de la mémoire.
+
+- **Sortie :**
+  - Aucune. La fonction libère chaque couche, y compris les neurones qu'elle contient.
+
+- **Lexique :**
+  - `courant` : Un pointeur qui parcourt les nœuds de la liste des couches.
+  - `suivant` : Un pointeur temporaire pour stocker la couche suivante pendant la libération.
+  - `courant.listeNeurones` : La liste de neurones associée à une couche, qui est libérée avant la couche elle-même.
+
+---
+
+## 15. **Fonction freeReseau(reseau: Reseau)**
+
+- **Entrée :**
+  - `reseau` : Un réseau de neurones complet à libérer de la mémoire.
+
+- **Sortie :**
+  - Aucune. La fonction libère toutes les couches, neurones et poids du réseau.
+
+- **Lexique :**
+  - `reseau.premiereCouche` : La première couche du réseau, qui est libérée avec toutes les couches suivantes.
+  - `reseau` : L'objet réseau lui-même, libéré après ses composants.
 
 
 
