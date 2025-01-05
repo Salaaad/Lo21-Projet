@@ -33,7 +33,9 @@
 ### Démarche adoptée
 - Chaque composant (poids, neurone, couche, réseau) est conçu séparément pour respecter le principe de modularité.
 - Les fonctions sont conçues pour être réutilisables et flexibles, par exemple en utilisant des paramètres tels que le nombre d’entrées ou les biais.
-
+- Nous avons choisi une implémentation où le réseau est demandé à l'utilisateur pour le programme, ce n'est par exemple pas très adapté pour des réseaux plus complexes.
+- Également, nous avons choisi de considérer que le nombre de poids d'un neurone correspond au nombre d'entrée qu'il reçoit, nous ne considérons donc pas des neurones avec des poids initialisé mais non utilisé.
+- Ainsi il suffit de demander le nombre d'entrée des neurones de la première couche pour avoir le nombre de poids de toute la couche, puis le nombre de neurone de la couche indiquera le nombre de sorti et donc le nombre d'entrée de la couche suivante donc le nombre d'entrée des neurones. Le nombre de poids/entrée des neurones d'une couche dépend du nombre de neurone de la couche précedente.
 ## 2. Les Algorithmes 
 
 Fonction CreerListePoids (nombreEntrees: entier strict positif):liste<Poids>
@@ -576,8 +578,7 @@ Fin
 
 ### Résumé du Lexique :
 - **Poids** : Valeur qui détermine l'importance d'une entrée pour un neurone.
-- **Biais** : Valeur qui ajuste la sortie d'un neurone avant l'application de la fonction d'activation.
-- **Seuil** : Valeur utilisée pour décider de la sortie d'un neurone en comparant la somme pondérée des entrées.
+- **Biais** : Valeur qui ajuste la sortie d'un neurone avant l'application de la fonction d'activation, dans le projet on considère que le biais est un seuil auquel on compare la somme pondérée.
 - **Couche** : Un groupe de neurones dans le réseau.
 - **Reseau** : Un ensemble de couches de neurones connectées entre elles.
 
@@ -586,15 +587,40 @@ Ces fonctions forment un réseau de neurones où chaque neurone reçoit des entr
 ## 3. Jeux d’essais
 
 ### Une seule couche avec deux neurones
-- **Entrées** : `1,01`, `01,0`, Poids du premier neurone : `2,−12`, `-12,−1`, Poids du second neurone : `−1,2-1`, `2−1,2`, Biais : 1 pour les deux neurones.
+- **Entrées** : `4, 0, 1`, `2, 1, 3`
+- **Réseau** :
+  - Couche 1 :
+    - Neurone 1 : Poids `2, 6, 2` Biais `12`
+    - Neurone 2 : Poids `1, 3, 4` Biais `8`
+
+   
 - **Résultat attendu** :
-  - Neurone 1 : `(2∗1) +(−1∗0) =2 ≥ 1 ⇒ Sortie : 1`
-  - Neurone 2 : `(−1∗1) +(2∗0) =−1 < 1 ⇒ Sortie : 0`
-  - Sortie de la couche : `1,01`, `01,0`.
+  - Neurone 1 : `(4*2) + (0*6) + (1*2) = 10 < 12 ⇒ Sortie : 0`
+  - Neurone 2 : `(2*1) + (1*3) + (3*4) = 17 ≥ 8 ⇒ Sortie : 1`
+  - Sortie de la couche : `0, 1`
 
 ### Deux couches connectées
-- **Entrées** : `1,11`, `11,1`, Poids et biais prédéfinis.
+- **Entrées** : `2, 3` 
+- **Réseau** :
+  - Couche 1 :
+    - Neurone 1 : Poids `2, 6` Biais `3`
+    - Neurone 2 : Poids `2, 4` Biais `20`
+  - Couche 2 :
+    - Neurone 1 : Poids `3, 6` Biais `2`
+    - Neurone 2 : Poids `2, 1` Biais `6`
+    - Neurone 2 : Poids `1, 4` Biais `1`
+
+
 - **Résultat attendu** : La sortie de la première couche alimente les entrées de la deuxième couche, permettant une propagation avant complète.
+  - Couche 1 :
+    - Neurone 1 : `(2*2) + (3*6) = 22 ≥ 3 ⇒ Sortie : 1`
+    - Neurone 2 : `(2*2) + (3*4) = 16 < 20 ⇒ Sortie : 0`
+    - Sortie de la couche : `1, 0`
+  - Couche 2 :
+    - Neurone 1 : `(1*3) + (0*6) = 3 ≥ 2 ⇒ Sortie : 1`
+    - Neurone 2 : `(1*2) + (0*1) = 2 < 6 ⇒ Sortie : 0`
+    - Neurone 2 : `(1*1) + (0*4) = 1 ≥ 1 ⇒ Sortie : 1`
+    - Sortie de la couche : `1, 0, 1`
 
 ## Schéma pour le réseau multi-couche
 Voici un schéma explicatif pour le réseau multi-couche
@@ -602,7 +628,9 @@ Voici un schéma explicatif pour le réseau multi-couche
 
 
 ## 4. Commentaires sur les résultats
-- Les tests montrent que les algorithmes fonctionnent correctement pour des entrées et poids simples.
-- Les résultats des neurones respectent les calculs de sommes pondérées et la comparaison avec le biais.
-- L’implémentation est robuste pour des petites structures, mais des optimisations (comme une gestion mémoire efficace) seraient nécessaires pour des réseaux de grande taille.
+- La propagation avant du réseau de neurone s'effectue correctement dans les sous-couches cachées.
+- La fonction d'activation choisi est une somme pondérée que l'on compare au seuil/biais du neurone.
+- La fonction d'activation du neurone est facilement modifiable, le code est modulaire.
+- Comme dit précedemment l'implémentation choisi est adapté pour des réseaux simples car le réseau est à initialiser à la main par l'utilisateur.
+- Le système de réseau peut facilement être utilisé pour réaliser des opérations logiques complexes. 
 
