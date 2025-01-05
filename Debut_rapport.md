@@ -37,7 +37,6 @@
 ## 2. Les Algorithmes 
 
 Fonction CreerListePoids (nombreEntrees: entier strict positif):liste<Poids>
-
 Début
 
     listePoids <- créerListeVide()
@@ -62,7 +61,6 @@ Fin
 
 
 Fonction InitNeur (nombreEntrees: entier strict positif): Neurone
-
 Début
 
     biais <- (UserEntry)
@@ -82,7 +80,6 @@ Fin
 
 
 Fonction OutNeurone (neurone: Neurone, entrees: Liste<entrée:entier>): entier
-
 Début
 
     Si neurone == NULL ou entrees == NULL faire
@@ -112,7 +109,6 @@ Fin
 
 
 Fonction InitCouche (nombreNeurones: entier strict positif, nombreEntrees: entier strict positif): Couche
-
 Début
 
     nouvelleCouche <- CréerCoucheVide()
@@ -142,7 +138,6 @@ Fin
 
 
 Fonction Outcouche (couche: Couche, entrees: Liste<entré:entier>): Liste<entrée:entier>
-
 Début
 
     Si couche == NULL ou couche.listeNeurones == NULL ou entrees == NULL alors
@@ -178,7 +173,6 @@ Fin
 
 
 Fonction CreerResNeur (nbCouches: entier strict positif, neuronesParCouche: tableau d'entiers, entreesPremiereCouche: entier strict positif): Reseau
-
 Début
 
     reseau <- CréerRéseauVide(Reseau)
@@ -212,7 +206,6 @@ Fin
 
 
 Fonction OutReseau (reseau: Reseau, entreesInitiales: Liste<Entrée:entier>): Liste<Entrée:entier>
-
 Début
 
     entreesActuelles <- entreesInitiales
@@ -230,7 +223,6 @@ Fin
 
 
 Fonction afficherListeEntrees (listeEntrees: Liste<Entrée>)
-
 Début
 
     courant <- listeEntrees
@@ -246,7 +238,6 @@ Fin
 
 
 Fonction AfficherNeurone (neurone: Neurone)
-
 Début
 
     courant <- neurone.listePoids
@@ -263,7 +254,6 @@ Fin
 
 
 Fonction afficherCouche (couche: Couche)
-
 Début
 
     Si couche == NULL ou couche.listeNeurones == NULL alors
@@ -284,7 +274,6 @@ Fin
 
 
 Fonction afficherReseau (reseau: Reseau)
-
 Début
 
     coucheCourante <- reseau.premiereCouche
@@ -304,8 +293,8 @@ Fin
 
 
 Fonction freeListePoids(listePoids: Liste<Poids>)
-
 Début
+
     courant <- listePoids
     Tant que courant != NULL faire
         suivant <- courant.suivant  
@@ -316,8 +305,8 @@ Fin
 
 
 Fonction freeListeNeurones(listeNeurones: Liste<Neurone>)
-
 Début
+
     courant <- listeNeurones
     Tant que courant != NULL faire
         suivant <- courant.suivant         
@@ -325,11 +314,13 @@ Début
         free(courant)                    
         courant <- suivant                 
     Fin Tant que
+    
 Fin
 
 Fonction freeListeCouches(listeCouches: Liste<Couche>)
 
 Début
+
     courant <- listeCouches
     Tant que courant != NULL faire
         suivant <- courant.suivant               
@@ -337,17 +328,20 @@ Début
         Libérer courant                          
         courant <- suivant                       
     Fin Tant que
+    
 Fin
 
 
 Fonction freeReseau(reseau: Reseau)
 
 Début
+
     Si reseau = NULL alors
         Retourner 
     Fin Si
     freeListeCouches(reseau.premiereCouche) 
-    free(reseau)                         
+    free(reseau)      
+    
 Fin
 
 
