@@ -466,6 +466,56 @@ Fin
 - **Lexique :**
   - `coucheCourante` : Pointeur permettant de naviguer à travers les couches du réseau.
   - `indexCouche` : Un compteur pour indiquer l'index de la couche dans le réseau.
+ 
+
+
+Fonction freeListePoids(listePoids: Liste<Poids>)
+
+Début
+    courant <- listePoids
+    Tant que courant != NULL faire
+        suivant <- courant.suivant  
+        free(courant)             
+        courant <- suivant          
+    Fin Tant que
+Fin
+
+
+Fonction freeListeNeurones(listeNeurones: Liste<Neurone>)
+
+Début
+    courant <- listeNeurones
+    Tant que courant != NULL faire
+        suivant <- courant.suivant         
+        freeListePoids(courant.listePoids) 
+        free(courant)                    
+        courant <- suivant                 
+    Fin Tant que
+Fin
+
+Fonction freeListeCouches(listeCouches: Liste<Couche>)
+
+Début
+    courant <- listeCouches
+    Tant que courant != NULL faire
+        suivant <- courant.suivant               
+        freeListeNeurones(courant.listeNeurones) 
+        Libérer courant                          
+        courant <- suivant                       
+    Fin Tant que
+Fin
+
+
+Fonction freeReseau(reseau: Reseau)
+
+Début
+    Si reseau = NULL alors
+        Retourner 
+    Fin Si
+    freeListeCouches(reseau.premiereCouche) 
+    free(reseau)                         
+Fin
+
 
 ---
 
