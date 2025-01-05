@@ -9,22 +9,23 @@ int main() {
 
 
     /** 
-    // Créer une couche avec 3 neurones, chacun ayant 2 entrées                                                  TEST AVEC JUSTE LES COUCHES
+    
+    // Créer une couche avec 3 neurones, chacun ayant 2 Entrees                                                  TEST AVEC JUSTE LES COUCHES
     Couche* maCouche = InitCouche(2, 1);
 
-    // Créer une liste chaînée d'entrées
-    Entrée* mesEntrees = creerListeEntrees(1); // Deux entrées, e.g., {1, 0}
+    // Créer une liste chaînée d'Entrees
+    Entree* mesEntrees = creerListeEntrees(1); // Deux Entrees, e.g., {1, 0}
 
     // Calculer les sorties de la couche
-    Entrée* sorties = Outcouche(maCouche, mesEntrees);
+    Entree* sorties = Outcouche(maCouche, mesEntrees);
 
     // Afficher les sorties
     printf("Sorties de la couche : ");
-    while (sorties != NULL) {
-        printf("%d ", sorties->valeur);
-        sorties = sorties->suivant;
-    }
-    printf("\n");
+    afficherListeEntrees(sorties);
+
+    freeListeEntree(mesEntrees);
+    freeListeCouches(Couche);
+    free(sorties);
 
     */
 
@@ -35,18 +36,18 @@ int main() {
 
 
 
-
+    /** 
    
 
     Neurone* Node=InitNeur(2);                           //TEST AVEC JUSTE LES NEURONES
-    Entrée* entry=creerListeEntrees(2);
+    Entree* entry=creerListeEntrees(2);
     afficherNeurone(Node);
     printf("\n%i",Outneurone(Node,entry));
     
     freeListeEntree(entry);
     freeListeNeurones(Node);
 
-
+    */
 
 
 
@@ -62,16 +63,17 @@ int main() {
 
     afficherReseau(reseau);
 
-    Entrée* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
-    printf("Entrée du réseau : ");
+    Entree* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
+    printf("Entree du réseau : ");
     afficherListeEntrees(entreesInitiales);
 
-    Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
+    Entree* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
 
     freeListeEntree(entreesInitiales);
     freeReseau(reseau);
+    free(sortieReseau);
 
     
     */
@@ -106,16 +108,17 @@ int main() {
 
     afficherReseau(reseau);
 
-    Entrée* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
-    printf("Entrée du réseau : ");
+    Entree* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
+    printf("Entree du réseau : ");
     afficherListeEntrees(entreesInitiales);
 
-    Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
+    Entree* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
 
     freeListeEntree(entreesInitiales);
     freeReseau(reseau);
+    free(sortieReseau);
     
     */  
 
@@ -136,17 +139,17 @@ int main() {
 
     afficherReseau(reseau);
 
-    Entrée* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
-    printf("Entrée du réseau : ");
+    Entree* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
+    printf("Entree du réseau : ");
     afficherListeEntrees(entreesInitiales);
 
-    Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
+    Entree* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
 
     freeListeEntree(entreesInitiales);
     freeReseau(reseau);
-
+    free(sortieReseau);
 
     */
 
@@ -165,16 +168,17 @@ int main() {
 
     afficherReseau(reseau);
 
-    Entrée* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
-    printf("Entrée du réseau : ");
+    Entree* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
+    printf("Entree du réseau : ");
     afficherListeEntrees(entreesInitiales);
 
-    Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
+    Entree* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
 
     freeListeEntree(entreesInitiales);
     freeReseau(reseau);
+    free(sortieReseau);
 
     */
 
@@ -190,17 +194,17 @@ int main() {
 
     afficherReseau(reseau);
 
-    Entrée* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
-    printf("Entrée du réseau : ");
+    Entree* entreesInitiales = creerListeEntrees(entreesPremiereCouche);  
+    printf("Entree du réseau : ");
     afficherListeEntrees(entreesInitiales);
 
-    Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
+    Entree* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
 
     freeListeEntree(entreesInitiales);
     freeReseau(reseau);    
-
+    free(sortieReseau);
 
     */
 

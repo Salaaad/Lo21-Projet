@@ -4,13 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct Entrée {
+typedef struct Entree {
     int valeur;
-    struct Entrée* suivant;
-} Entrée;
+    struct Entree* suivant;
+} Entree;
 
 
-typedef Entrée* listEntrees;  
+typedef Entree* listEntrees;  
 
 typedef struct Poids {
     float valeur;
@@ -44,23 +44,23 @@ typedef struct Reseau {
 
 
 
-// Fonction pour créer une liste chaînée d'entrées
+// Fonction pour créer une liste chaînée d'Entrees
 listEntrees creerListeEntrees(int nombreEntrees) {
-    Entrée* listeEntrees = NULL;
-    Entrée* courant = NULL;
+    Entree* listeEntrees = NULL;
+    Entree* courant = NULL;
 
     for (int i = 0; i < nombreEntrees; i++) {
         int entree;
-        printf("Entrez l'entrée %i : ", i + 1);
+        printf("Entrez l'Entree %i : ", i + 1);
         scanf("%i", &entree);
         
-        // Création dynamique de l'entrée
-        Entrée* nouvelleEntree = (Entrée*)malloc(sizeof(Entrée));
+        // Création dynamique de l'Entree
+        Entree* nouvelleEntree = (Entree*)malloc(sizeof(Entree));
         nouvelleEntree->valeur = entree;
         nouvelleEntree->suivant = NULL;
 
         if (listeEntrees == NULL) {
-            listeEntrees = nouvelleEntree;  //Si c'est la première entrée ça devient la tête de liste sinon on l'ajoute à la liste
+            listeEntrees = nouvelleEntree;  //Si c'est la première Entree ça devient la tête de liste sinon on l'ajoute à la liste
         } else {
             courant->suivant = nouvelleEntree;  
         }
@@ -97,9 +97,9 @@ listPoids creerListePoids(int nombreEntrees) {
 }
 
 
-// Fonction pour créer un noeud d'entrée
-Entrée* creerEntree(int valeur) {
-    Entrée* nouvelleEntree = (Entrée*)malloc(sizeof(Entrée));
+// Fonction pour créer un noeud d'Entree
+Entree* creerEntree(int valeur) {
+    Entree* nouvelleEntree = (Entree*)malloc(sizeof(Entree));
     nouvelleEntree->valeur = valeur;
     nouvelleEntree->suivant = NULL;
     return nouvelleEntree;
@@ -124,20 +124,20 @@ Neurone* InitNeur(int nombreEntrees) {
 }
 
 
-int Outneurone(Neurone* neurone, Entrée* entrees) {
+int Outneurone(Neurone* neurone, Entree* entrees) {
     if (neurone == NULL || entrees == NULL) {
-        printf("Erreur : Neurone ou liste d'entrées invalide.\n");
+        printf("Erreur : Neurone ou liste d'Entrees invalide.\n");
         return -1; // Code d'erreur
     }
 
     float somme = 0; 
     Poids* courantPoids = neurone->listePoids;
-    Entrée* courantEntree = entrees;
+    Entree* courantEntree = entrees;
 
     while (courantPoids != NULL && courantEntree != NULL) {
         somme += courantPoids->valeur * courantEntree->valeur; // Calcul à l'aide de la fonction d'activation
         courantPoids = courantPoids->suivant;  // Passer au poids suivant
-        courantEntree = courantEntree->suivant;  // Passer à l'entrée suivante
+        courantEntree = courantEntree->suivant;  // Passer à l'Entree suivante
     }
 
     if (somme >= neurone->biais) {
@@ -160,7 +160,7 @@ Couche* InitCouche(int nombreNeurones, int nombreEntrees) {
     for (int i = 0; i < nombreNeurones; i++) {
         printf("Initialisation du neurone %i de la couche :\n", i + 1);
 
-        // Créer un neurone en passant le nombre d'entrées comme paramètre car le neurone autre le même nombre de poids que d'entrée
+        // Créer un neurone en passant le nombre d'Entrees comme paramètre car le neurone autre le même nombre de poids que d'Entree
         Neurone* nouveauNeurone = InitNeur(nombreEntrees);
 
         if (nouvelleCouche->listeNeurones == NULL) {
@@ -177,21 +177,21 @@ Couche* InitCouche(int nombreNeurones, int nombreEntrees) {
 
 // Fonction pour calculer la liste des sorties d'une couche
 
-listEntrees Outcouche(Couche* couche, Entrée* entrees) {
+listEntrees Outcouche(Couche* couche, Entree* entrees) {
     if (couche == NULL || couche->listeNeurones == NULL || entrees == NULL) {
-        printf("Erreur : Couche ou liste d'entrées invalide.\n");
+        printf("Erreur : Couche ou liste d'Entrees invalide.\n");
         return NULL;
     }
 
-    Entrée* listeSorties = NULL; 
-    Entrée* courantSorties = NULL;
+    Entree* listeSorties = NULL; 
+    Entree* courantSorties = NULL;
 
     Neurone* courantNeurone = couche->listeNeurones;
 
     while (courantNeurone != NULL) {
         
         int sortie = Outneurone(courantNeurone, entrees);
-        Entrée* nouvelleSortie = creerEntree(sortie);
+        Entree* nouvelleSortie = creerEntree(sortie);
 
         // Ajouter cette sortie à la liste des sorties
         if (listeSorties == NULL) {
@@ -233,7 +233,7 @@ Reseau* CreerResNeur(int nbCouches, int* neuronesParCouche, int entreesPremiereC
  
         coucheCourante = nouvelleCouche;
 
-        // Le nombre d'entrée de la couche suivante sera le nombre de neurone de la couche précedente
+        // Le nombre d'Entree de la couche suivante sera le nombre de neurone de la couche précedente
         nbEntrees = neuronesParCouche[i];
     }
     printf("Réseau créé avec succès !\n");
@@ -241,14 +241,14 @@ Reseau* CreerResNeur(int nbCouches, int* neuronesParCouche, int entreesPremiereC
 }
 
 // Fonction pour calculer la sortie du réseau
-listEntrees OutReseau(Reseau* reseau, Entrée* entreesInitiales) {
-    Entrée* entreesActuelles = entreesInitiales;  
+listEntrees OutReseau(Reseau* reseau, Entree* entreesInitiales) {
+    Entree* entreesActuelles = entreesInitiales;  
     Couche* coucheCourante = reseau->premiereCouche;
     
  
     while (coucheCourante != NULL) {
-        // Calculer la sortie de la couche courante avec les entrées actuelles
-        // La sortie de cette couche devient l'entrée pour la couche suivante
+        // Calculer la sortie de la couche courante avec les Entrees actuelles
+        // La sortie de cette couche devient l'Entree pour la couche suivante
         entreesActuelles = Outcouche(coucheCourante, entreesActuelles);
         
         coucheCourante = coucheCourante->suivant;
@@ -262,9 +262,9 @@ listEntrees OutReseau(Reseau* reseau, Entrée* entreesInitiales) {
 
 
 
-// Fonction pour afficher une liste chaînée d'entrées
-void afficherListeEntrees(Entrée* listeEntrees) {
-    Entrée* courant = listeEntrees;
+// Fonction pour afficher une liste chaînée d'Entrees
+void afficherListeEntrees(Entree* listeEntrees) {
+    Entree* courant = listeEntrees;
     while (courant != NULL) {
         printf("%i ", courant->valeur);  
         courant = courant->suivant;       
@@ -322,9 +322,9 @@ free(reseau);
 
 
 void freeListeEntree(listEntrees listEntrees) {
-    Entrée* courant = listEntrees;
+    Entree* courant = listEntrees;
     while (courant != NULL) {
-        Entrée* suivant = courant->suivant; 
+        Entree* suivant = courant->suivant; 
         free(courant);                     
         courant = suivant;                 
     }
@@ -371,6 +371,7 @@ void freeReseau(Reseau* reseau) {
     freeListeCouches(reseau->premiereCouche); 
     free(reseau);                             
 }
+
 
 
 
