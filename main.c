@@ -36,15 +36,16 @@ int main() {
 
 
 
-   /** 
+   
 
     Neurone* Node=InitNeur(2);                           //TEST AVEC JUSTE LES NEURONES
     Entrée* entry=creerListeEntrees(2);
     afficherNeurone(Node);
     printf("\n%i",Outneurone(Node,entry));
+    
+    freeListeEntree(entry);
+    freeListeNeurones(Node);
 
-
-    */
 
 
 
@@ -69,9 +70,11 @@ int main() {
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
 
+    freeListeEntree(entreesInitiales);
+    freeReseau(reseau);
 
+    
     */
-
 
 
 
@@ -110,7 +113,9 @@ int main() {
     Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
-        
+
+    freeListeEntree(entreesInitiales);
+    freeReseau(reseau);
     
     */  
 
@@ -138,10 +143,14 @@ int main() {
     Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
-        
+
+    freeListeEntree(entreesInitiales);
+    freeReseau(reseau);
+
+
     */
 
-   
+
 
 
 
@@ -163,12 +172,15 @@ int main() {
     Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
-        
+
+    freeListeEntree(entreesInitiales);
+    freeReseau(reseau);
 
     */
 
 
 
+   /** 
 
     int nbCouches = 3;                                   // RESEAU MULTI COUCHE [A ET (NON B) ET C] OU [A ET (NON C)]
     int neuronesParCouche[] = {5,2,1};  
@@ -185,10 +197,12 @@ int main() {
     Entrée* sortieReseau = OutReseau(reseau, entreesInitiales);
     printf("Sortie du réseau : ");
     afficherListeEntrees(sortieReseau);
-        
+
+    freeListeEntree(entreesInitiales);
+    freeReseau(reseau);    
 
 
-
+    */
 
 
 

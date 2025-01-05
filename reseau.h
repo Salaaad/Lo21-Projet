@@ -316,5 +316,61 @@ void afficherReseau(Reseau* reseau) {
 
 
 
+
+
+void freeListeEntree(listEntrees listEntrees) {
+    Entrée* courant = listEntrees;
+    while (courant != NULL) {
+        Entrée* suivant = courant->suivant; 
+        free(courant);                     
+        courant = suivant;                 
+    }
+}
+
+
+void freeListePoids(listPoids listePoids) {
+    Poids* courant = listePoids;
+    while (courant != NULL) {
+        Poids* suivant = courant->suivant; 
+        free(courant);                     
+        courant = suivant;                 
+    }
+}
+
+
+
+void freeListeNeurones(listNeurone listeNeurones) {
+    Neurone* courant = listeNeurones;
+    while (courant != NULL) {
+        Neurone* suivant = courant->suivant; 
+        freeListePoids(courant->listePoids); 
+        free(courant);                       
+        courant = suivant;                   
+    }
+}
+
+void freeListeCouches(listCouche listeCouches) {
+    Couche* courant = listeCouches;
+    while (courant != NULL) {
+        Couche* suivant = courant->suivant;        
+        freeListeNeurones(courant->listeNeurones); 
+        free(courant);                              
+        courant = suivant;                          
+    }
+}
+
+
+void freeReseau(Reseau* reseau) {
+    if (reseau == NULL) {
+        return; 
+    }
+
+    freeListeCouches(reseau->premiereCouche); 
+    free(reseau);                             
+}
+
+
+
+
 #endif
 
