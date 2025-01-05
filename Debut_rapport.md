@@ -587,16 +587,16 @@ Ces fonctions forment un réseau de neurones où chaque neurone reçoit des entr
 ## 3. Jeux d’essais
 
 ### Une seule couche avec deux neurones
-- **Entrées** : `4, 0, 1`, `2, 1, 3`
+- **Entrées** : `4, 0, 1`
 - **Réseau** :
   - Couche 1 :
     - Neurone 1 : Poids `2, 6, 2` Biais `12`
-    - Neurone 2 : Poids `1, 3, 4` Biais `8`
+    - Neurone 2 : Poids `1, 3, 4` Biais `6`
 
    
 - **Résultat attendu** :
   - Neurone 1 : `(4*2) + (0*6) + (1*2) = 10 < 12 ⇒ Sortie : 0`
-  - Neurone 2 : `(2*1) + (1*3) + (3*4) = 17 ≥ 8 ⇒ Sortie : 1`
+  - Neurone 2 : `(4*1) + (0*3) + (1*4) = 8 ≥ 6 ⇒ Sortie : 1`
   - Sortie de la couche : `0, 1`
 
 ### Deux couches connectées
