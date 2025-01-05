@@ -2,18 +2,18 @@
 
 
 ## Table des matières
-1. [Choix de conception et d’implémentation](#choix-de-conception-et-dimplémentation) 1  
-   - Liste chaînée pour les poids : 1  
-   - Structure pour le neurone : 1  
-   - Liste dynamique pour les neurones dans une couche : 2  
-   - Structure pour le réseau : 2  
-   - Démarche adoptée : 2  
-2. [Les Algorithmes](#Les-Algorithmes) 2  
-3. [Explications des algorithmes](#Explications-des-algorithmes) 3  
-4. [Jeux d’essais](#jeux-dessais) 3  
-   - Une seule couche avec deux neurones : 3  
-   - Deux couches connectées : 3  
-5. [Commentaires sur les résultats](#commentaires-sur-les-résultats) 3
+1. [Choix de conception et d’implémentation](#choix-de-conception-et-dimplémentation) 
+   - Liste chaînée pour les poids 
+   - Structure pour le neurone 
+   - Liste dynamique pour les neurones dans une couche 
+   - Structure pour le réseau 
+   - Démarche adoptée  
+2. [Les Algorithmes](#Les-Algorithmes)  
+3. [Explications des algorithmes](#Explications-des-algorithmes)  
+4. [Jeux d’essais](#jeux-dessais)   
+   - Une seule couche avec deux neurones   
+   - Deux couches connectées 
+5. [Commentaires sur les résultats](#commentaires-sur-les-résultats) 
 
 ## 1. Choix de conception et d’implémentation
 
